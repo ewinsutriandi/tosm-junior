@@ -13,7 +13,7 @@ const isFormUsernameOpened = ref(false)
 const selectedOperation = ref(0)
 
 const showForm = () => {
-  console.log('Show modal form')
+  // console.log('Show modal form')
   isFormUsernameOpened.value = true
 }
 
@@ -23,10 +23,10 @@ const closeForm = () => {
 }
 
 const startOperation = (operation) => {
-  console.log('Operation: ',selectedOperation.value)
+  // console.log('Operation: ',selectedOperation.value)
   if (operation.value == 0) return
   selectedOperation.value = operation
-  console.log(current_user.value,current_user.value == undefined, current_user.value == '')
+  // console.log(current_user.value,current_user.value == undefined, current_user.value == '')
   if (current_user.value == '') {
     showForm()
   } else {
@@ -39,9 +39,9 @@ const startOperation = (operation) => {
 
 <template>
   <div >
-    <h2>
-      Pilih operasi
-    </h2>
+    <h3>
+      PILIH OPERASI
+    </h3>
     <div class="opbutton">
       <div class="row">
         <button @click="startOperation(Operations.TAMBAH)" class="button">

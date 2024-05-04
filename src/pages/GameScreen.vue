@@ -6,11 +6,12 @@ import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
 import { generateQuiz } from '../helpers/generators.js'
 import { useStore } from '../store/index'
+import { Operations } from '../helpers/constants'
 
 const store = useStore()
 const {settings} = storeToRefs(store)
 
-console.log('settings',settings)
+// console.log('settings',settings)
 
 const GameState = Object.freeze({ 
     PICK_LEVEL: -1,  
@@ -34,7 +35,7 @@ let timeLimit
 
 // Questions related
 function initLevel() {
-  console.log("init level: "+curLevel.value)
+  // console.log("init level: "+curLevel.value)
   let levelQuizObj = generateQuiz(curLevel.value,store.current_ops) 
   questions = levelQuizObj.questions
   timeLimit = levelQuizObj.timeLimit
@@ -45,7 +46,7 @@ function initLevel() {
 }
 
 // Prompt to pick level if necessary
-if (store.maxLevel > 1) {
+if (store.maxOpsLevel > 1) {
   gameState.value = GameState.PICK_LEVEL
 }
 
@@ -141,6 +142,7 @@ function replayLevel() {
 function endGame(state) {
   let duration = Math.round((Date.now() - startTime.value)/1000)
   store.newStats({
+    operation  : store.current_ops,
     time_taken : Date.now(),
     duration   : duration,
     level      : curLevel.value,
@@ -154,6 +156,7 @@ function endGame(state) {
 </script>
 <template>
   <div>
+    {{ store.current_ops }} | {{ store.maxOpsLevel }}
     <!-- Pick level if maxlevel > 1-->
     <div v-if="gameState == GameState.PICK_LEVEL">
       <h3> PILIH LEVEL</h3>
@@ -161,7 +164,10 @@ function endGame(state) {
       <p>
         <button @click="prepareFirstGame(1)">LEVEL 1</button>
         &nbsp;
-        <button @click="prepareFirstGame(store.maxLevel)">LEVEL {{ store.maxLevel }}</button>
+        <button 
+          @click="prepareFirstGame(store.maxOpsLevel)">
+          LEVEL {{ store.maxOpsLevel }}
+        </button>
       </p>
       <div class="info">Mulai dari awal atau lanjut dari level teratas yang pernah dicapai</div>
       
@@ -189,18 +195,18 @@ function endGame(state) {
     <div v-if="gameState == GameState.LOSE_BY_MISTAKE 
           || gameState == GameState.LOSE_TIME_UP
           || gameState == GameState.WON">
-      <textcaption>Permainan Selesai</textcaption> 
+      <h2>Permainan Selesai</h2> 
       <div v-if="gameState == GameState.WON">
-        <h1>Anda menang</h1>
+        <h1>Berhasil!</h1>
         <button @click="prepareNextLevel">Lanjut Level {{curLevel + 1}}</button>
       </div>
       <div v-if="gameState == GameState.LOSE_TIME_UP">
-        <div><textsubcaption>Waktu habis</textsubcaption></div>
+        <div><h1>Waktu habis!</h1></div>
         <p>&nbsp;</p>
         <button @click="replayLevel">Coba lagi</button>
       </div>
       <div v-if="gameState == GameState.LOSE_BY_MISTAKE">
-        <div><textsubcaption>Salah Menjawab</textsubcaption></div>
+        <div><h1>Salah Menjawab</h1></div>
         <p>soal: {{ mistake.quiz.soal }}</p>
         <p>Jawaban: {{ mistake.ans }}, yang benar: {{mistake.quiz.ans}}</p>
         <p>&nbsp;</p>

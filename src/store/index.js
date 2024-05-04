@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { Operations } from '../helpers/constants'
 
 export const useStore = defineStore('tosmj', {
   state: () => ({
@@ -26,7 +27,12 @@ export const useStore = defineStore('tosmj', {
         }
       }
       return maxLevel
-    }
+    },
+    dummy: (state) => "haha"+2+state.current_user,
+    maxOpsLevel: (state) => 
+        state.users_test_history[state.current_user]
+          .filter(rec   => rec.operation == state.current_ops && rec.end_state == 2)
+          .reduce((a,b) => a < b.level ? b.level : a, 1 ) + 1
   },
   actions: {
     newStats(stats) {
