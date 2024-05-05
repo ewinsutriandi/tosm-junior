@@ -6,7 +6,7 @@ import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
 import { generateQuiz } from '../helpers/generators.js'
 import { useStore } from '../store/index'
-import { Operations } from '../helpers/constants'
+import { Operations,OperationDesc } from '../helpers/constants'
 
 const store = useStore()
 const {settings} = storeToRefs(store)
@@ -67,7 +67,7 @@ function onKey(key) {
   if (/^[0-9]$/.test(key) && gameState.value == GameState.IN_GAME) {
     // console.log('Digit detected: '+key)
     ansTemp.value += key
-    console.log('ansTemp: '+ansTemp.value)
+    // console.log('ansTemp: '+ansTemp.value)
     evaluateKeyPress()
   }
 }
@@ -156,10 +156,12 @@ function endGame(state) {
 </script>
 <template>
   <div>
-    {{ store.current_ops }} | {{ store.maxOpsLevel }}
+    <!--{{ store.current_ops }} | {{ store.maxOpsLevel }}-->
     <!-- Pick level if maxlevel > 1-->
     <div v-if="gameState == GameState.PICK_LEVEL">
-      <h3> PILIH LEVEL</h3>
+      <h3>  Operasi {{ OperationDesc(store.current_ops) }}</h3>
+      <p>&nbsp;</p>
+      <h4> PILIH LEVEL</h4>
       <p>&nbsp;</p>
       <p>
         <button @click="prepareFirstGame(1)">LEVEL 1</button>

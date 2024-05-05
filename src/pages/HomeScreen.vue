@@ -40,7 +40,7 @@ const startOperation = (operation) => {
 <template>
   <div >
     <h3>
-      PILIH OPERASI
+      Pilih Operasi
     </h3>
     <div class="opbutton">
       <div class="row">
