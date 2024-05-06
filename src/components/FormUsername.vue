@@ -1,7 +1,16 @@
 <script setup>
-import { defineProps, defineEmits, ref } from "vue";
+import { defineProps, defineEmits, ref, watch, nextTick } from "vue";
 import  {useStore} from '../store/index'
 const store = useStore()
+const inputField = ref(null)
+
+const focusInput = () => {
+  console.log(inputField)
+  nextTick(() => {
+    if (inputField.value) inputField.value.focus()
+    }   
+  )
+};
 
 const props = defineProps({
   isOpen: Boolean,
@@ -30,6 +39,17 @@ const shakeInput = () => {
     }, 1500)
 }
 
+watch(
+  () => props.isOpen,
+  (newValue, oldValue) => {
+    if (newValue && !oldValue) {
+      console.log("Now true")
+      //console.log(nameinput)
+      focusInput()
+    }
+  }
+);
+
 </script>
 
 <template>
@@ -38,7 +58,9 @@ const shakeInput = () => {
       <div class="modal-container center" ref="target">
         <div>Isi nama terlebih dahulu</div>
         <div class="center">
-            <input type="text" class="nameinput" :class="{shake: shake}" v-model="nama" @keyup.enter="closeModal"/>  
+            <input ref="inputField" 
+              type="text" class="nameinput" 
+              :class="{shake: shake}" v-model="nama" @keyup.enter="closeModal"/>  
             <button class="button" @click.stop="closeModal">Simpan</button>
         </div>
         <div class="info">

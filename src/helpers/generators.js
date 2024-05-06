@@ -21,7 +21,6 @@ export function generateQuiz(level,operation) {
 const timeLimits = [5,5,5,5,5,4,4,4,3,2.5,2]  // secs per ops by level
 
 function addLevelGenerator(level) {
-    
     let questions = 
           level == 1 ? Array.from(Array(8).keys()).map((x)=> createAddQuiz(x+1,1)) // 1-8 + 1 5secs per ops
         : level == 2 ? Array.from(Array(7).keys()).map((x)=> createAddQuiz(x+1,2)) // 1-7 + 2
@@ -35,12 +34,10 @@ function addLevelGenerator(level) {
         : level == 10 ? addQuizGenerator(1,9,20) // 2.5 secs per ops
         : level == 11 ? addQuizGenerator(1,9,20) // 2 secs per ops
         : []
-    
-    let timeLimit = questions.length * timeLimits[level]
-    
+
     return {
         questions: randomize(questions),
-        timeLimit: timeLimit
+        timeLimit: questions.length * timeLimits[level]
     }
 }
 
