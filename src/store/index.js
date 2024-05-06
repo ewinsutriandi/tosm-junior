@@ -1,12 +1,7 @@
 import { defineStore } from 'pinia'
 
-export const useStore = defineStore('tosmj', {
+export const useStore = defineStore('exercise_data', {
   state: () => ({
-    settings: {
-      fontSize: 14,
-      tabSize: 2,
-      zoomLevel: 0,
-    },
     users: {},
     current_user: "",
     users_test_history: {},
@@ -14,20 +9,6 @@ export const useStore = defineStore('tosmj', {
 
   }),
   getters: {
-    doubleCounter: (state) => state.counter * 2,
-    maxLevel: (state) => {
-      let maxLevel = 1
-      if (state.current_user in state.users_test_history) {
-        let statses = state.users_test_history[state.current_user]
-        for (const s of statses) {
-          if (s.level >= maxLevel && s.end_state == 2) {
-            maxLevel = s.level + 1
-          }
-        }
-      }
-      return maxLevel
-    },
-    dummy: (state) => "haha"+2+state.current_user,
     maxOpsLevel: (state) => 
         state.users_test_history[state.current_user]?
         state.users_test_history[state.current_user]
