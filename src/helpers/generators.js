@@ -9,6 +9,13 @@ export function randomize(arr) {
 };
 
 export function generateQuiz(level,operation) {
+    const generator = operation == Operations.TAMBAH ? addLevelGenerator
+        : operation == Operations.KURANG ? subLevelGenerator
+        : operation == Operations.KALI ? multLevelGenerator
+        : operation == Operations.BAGI ? multLevelGenerator
+        : undefined
+    return generator(level)
+    /*
     if (operation == Operations.TAMBAH) {
         return addLevelGenerator(level)
     }
@@ -17,7 +24,7 @@ export function generateQuiz(level,operation) {
     }
     else if (operation == Operations.KALI) {
         return multLevelGenerator(level)
-    }
+    }*/
 }
 
 function addLevelGenerator(level) {
@@ -284,32 +291,104 @@ function multLevelGenerator(level) {
     }
 }
 
-function createAddQuiz(a,b) {
+function divLevelGenerator(level) {
+    let questions = []
+    let timeLimit = 0
+    // LEVEL 1, pembagian 2 dan 3 di bawah 10
+    if (level == 1) {
+        for (let i = 1; i <= 9; i++) {
+            questions.push(createMultQuiz(i,1))
+        }
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 2, mult by 2, result less than 10
+    else if (level == 2) {
+        for (let i = 1; i <= 4; i++) {
+            questions.push(createMultQuiz(i,2))
+        }
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 3, add 2 to 8
+    else if (level == 3) {
+        questions.push(...multQuizGenerator(2,6,15))
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 4, add 3 to 9
+    else if (level == 4) {
+        questions.push(...multQuizGenerator(2,7,25))
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 5, add 4 to 11
+    else if (level == 5) {
+        questions.push(...multQuizGenerator(3,8,40))
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 6, add 5 to 13
+    else if (level == 6) {
+        questions.push(...multQuizGenerator(4,9,60))
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 7, add 6 results < 15
+    else if (level == 7) {
+        questions.push(...multQuizGenerator(3,9,100))
+        timeLimit = questions.length * 5
+    }
+    // LEVEL 8, add 6 to 9 , results < 15
+    else if (level == 8) {
+        questions.push(...multQuizGenerator(2,9,100))
+        timeLimit = questions.length * 4
+    }
+    // LEVEL 9, add 6 to 9 , results < 15
+    else if (level == 9) {
+        questions.push(...subQuizGenerator(2,8))
+        timeLimit = questions.length * 4
+    }
+    // LEVEL 10, add 6 to 9 , results < 15
+    else if (level == 10) {
+        questions.push(...subQuizGenerator(2,9))
+        timeLimit = questions.length * 4
+    }
+    // LEVEL 11, add 6 to 9 , results < 15
+    else if (level == 11) {
+        questions.push(...subQuizGenerator(1,8))
+        timeLimit = questions.length * 4
+    }
+    // TOSM RED
+    else if (level == 12) {
+        questions.push(...subQuizGenerator(1,9))
+        timeLimit = questions.length * 4
+    }
+    // TOSM YELLOW
+    else if (level == 13) {
+        questions.push(...subQuizGenerator(1,9))
+        timeLimit = questions.length * 3
+    }
+    // TOSM GREEN
+    else if (level == 14) {
+        questions.push(...subQuizGenerator(1,9))
+        timeLimit = questions.length * 2
+    }
+    // TOSM BLUE
+    else if (level == 15) {
+        questions.push(...subQuizGenerator(1,9))
+        timeLimit = questions.length * 1.5
+    }
     return {
-        b1 : a,
-        b2 : b,
-        soal : a+" + "+b,
-        ans: a + b
+        questions: randomize(questions),
+        timeLimit: timeLimit
     }
 }
 
-function createSubQuiz(a,b) {
-    return {
-        b1 : a,
-        b2 : b,
-        soal : a+" - "+b,
-        ans: a - b
-    }
-}
+const createQuiz = (a,b) => ({b1: a, b2: b,})
+const createAddQuiz = (a,b) => 
+    ({ ...createQuiz(a,b), soal: a+" + "+b, ans: a + b})
+const createSubQuiz = (a,b) => 
+    ({ ...createQuiz(a,b), soal: a+" - "+b, ans: a - b})
+const createMultQuiz = (a,b) => 
+    ({ ...createQuiz(a,b), soal: a+" × "+b, ans: a * b})
+const createDivQuiz = (a,b) => 
+    ({ ...createQuiz(a,b), soal: a+" ÷ "+b, ans: a / b})
 
-function createMultQuiz(a,b) {
-    return {
-        b1 : a,
-        b2 : b,
-        soal : a+" × "+b,
-        ans: a * b
-    }
-}
 
 function addQuizGenerator(lower,upper,max_result) {
     let daftar_soal = []
