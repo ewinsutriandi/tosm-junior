@@ -18,7 +18,7 @@ export function generateQuiz(level,operation) {
     return generator(level)
 }
 
-const timeLimits = [5,5,5,5,5,4,4,4,3,2.5,2]  // secs per ops by level
+const timeLimits = [5,5,5,5,5,5,5,5,4,3,2.5,2]  // secs per ops by level
 
 const createQuiz = (a,b) => ({b1: a, b2: b,})
 const createAddQuiz = (a,b) => 
@@ -81,12 +81,13 @@ function addLevelGenerator(level) {
         : level == 3 ? addQuizGenerator(2,5,8)  
         : level == 4 ? addQuizGenerator(3,6,9)
         : level == 5 ? addQuizGenerator(4,7,11)
-        : level == 6 ? addQuizGenerator(5,8,13) // 4 secs per ops
+        : level == 6 ? addQuizGenerator(5,8,13) 
         : level == 7 ? addQuizGenerator(6,9,15)
         : level == 8 ? addQuizGenerator(3,9,20)  
-        : level == 9 ? addQuizGenerator(1,9,20)  // 3 secs per ops
-        : level == 10 ? addQuizGenerator(1,9,20) // 2.5 secs per ops
-        : level == 11 ? addQuizGenerator(1,9,20) // 2 secs per ops
+        : level == 9 ? addQuizGenerator(1,9,20)  // 4 secs per ops
+        : level == 10 ? addQuizGenerator(1,9,20) // 3 secs per ops
+        : level == 11 ? addQuizGenerator(1,9,20) // 2.5 secs per ops
+        : level == 12 ? addQuizGenerator(1,9,20) // 2 secs per ops
         : []
 
     return {
@@ -102,12 +103,13 @@ function subLevelGenerator(level) {
         : level == 3 ? Array.from(Array(6).keys()).map((x)=> createSubQuiz(x+4,3)) // 1-9 - 3  
         : level == 4 ? subQuizGenerator(2,7)
         : level == 5 ? subQuizGenerator(3,8)
-        : level == 6 ? subQuizGenerator(4,9) // 4 secs per ops
+        : level == 6 ? subQuizGenerator(4,9) 
         : level == 7 ? subQuizGenerator(3,9)
         : level == 8 ? subQuizGenerator(2,8)  
-        : level == 9 ? subQuizGenerator(1,9)  // 3 secs per ops
-        : level == 10 ? subQuizGenerator(1,9) // 2.5 secs per ops
-        : level == 11 ? subQuizGenerator(1,9) // 2 secs per ops
+        : level == 9 ? subQuizGenerator(1,9)  // 4 secs per ops
+        : level == 10 ? subQuizGenerator(1,9) // 3 secs per ops
+        : level == 11 ? subQuizGenerator(1,9) // 2.5 secs per ops
+        : level == 12 ? subQuizGenerator(1,9) // 2 secs per ops
         : []
 
     return {
@@ -123,12 +125,13 @@ function multLevelGenerator(level) {
         : level == 3 ? multQuizGenerator(2,5,15)
         : level == 4 ? multQuizGenerator(2,6,20)
         : level == 5 ? multQuizGenerator(3,7,35)
-        : level == 6 ? multQuizGenerator(2,8,50) // 4 secs per ops
+        : level == 6 ? multQuizGenerator(2,8,50) 
         : level == 7 ? multQuizGenerator(3,9,65)
         : level == 8 ? multQuizGenerator(2,9,80)  
-        : level == 9 ? multQuizGenerator(1,9,100)  // 3 secs per ops
-        : level == 10 ? multQuizGenerator(1,9,100) // 2.5 secs per ops
-        : level == 11 ? multQuizGenerator(1,9,100) // 2 secs per ops
+        : level == 9 ? multQuizGenerator(1,9,100)  // 4 secs per ops
+        : level == 10 ? multQuizGenerator(1,9,100) // 3 secs per ops
+        : level == 11 ? multQuizGenerator(1,9,100) // 2.5 secs per ops
+        : level == 12 ? multQuizGenerator(1,9,100) // 2 secs per ops
         : []
 
     return {
@@ -144,12 +147,13 @@ function divLevelGenerator(level) {
         : level == 3 ? divQuizGenerator(2,5,15)
         : level == 4 ? divQuizGenerator(2,6,20)
         : level == 5 ? divQuizGenerator(3,7,35)
-        : level == 6 ? divQuizGenerator(2,8,50) // 4 secs per ops
+        : level == 6 ? divQuizGenerator(2,8,50) 
         : level == 7 ? divQuizGenerator(3,9,65)
         : level == 8 ? divQuizGenerator(2,9,80)  
-        : level == 9 ? divQuizGenerator(1,9,100)  // 3 secs per ops
-        : level == 10 ? divQuizGenerator(1,9,100) // 2.5 secs per ops
-        : level == 11 ? divQuizGenerator(1,9,100) // 2 secs per ops
+        : level == 9 ? divQuizGenerator(1,9,100)  // 4 secs per ops
+        : level == 10 ? divQuizGenerator(1,9,100) // 3 secs per ops
+        : level == 11 ? divQuizGenerator(1,9,100) // 2.5 secs per ops
+        : level == 12 ? divQuizGenerator(1,9,100) // 2 secs per ops
         : []
 
     return {
