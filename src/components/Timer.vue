@@ -4,7 +4,7 @@ import { onMounted, ref } from 'vue'
 const emit = defineEmits(['time','timeisup'])
 const props = defineProps(['limit'])
 let mils = ref(0)
-console.log(props.limit)
+// console.log(props.limit)
 function timeElapsed() {
   //console.log('mils: '+mils)
     setTimeout(()=>{

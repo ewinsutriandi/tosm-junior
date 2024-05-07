@@ -6,12 +6,9 @@ import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
 import { generateQuiz } from '../helpers/generators.js'
 import { useStore } from '../store/index'
-import { Operations,OperationDesc } from '../helpers/constants'
+import { OperationDesc } from '../helpers/constants'
 
 const store = useStore()
-const {settings} = storeToRefs(store)
-
-// console.log('settings',settings)
 
 const GameState = Object.freeze({ 
     PICK_LEVEL: -1,  
@@ -150,8 +147,6 @@ function endGame(state) {
   })
   gameState.value = state
 }
-
-//startGame()
 
 </script>
 <template>

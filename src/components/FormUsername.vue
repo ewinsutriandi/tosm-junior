@@ -5,7 +5,6 @@ const store = useStore()
 const inputField = ref(null)
 
 const focusInput = () => {
-  console.log(inputField)
   nextTick(() => {
     if (inputField.value) inputField.value.focus()
     }   
@@ -15,7 +14,6 @@ const focusInput = () => {
 const props = defineProps({
   isOpen: Boolean,
 });
-
 
 const emit = defineEmits(["modal-close"]);
 const nama = ref('')
@@ -43,8 +41,6 @@ watch(
   () => props.isOpen,
   (newValue, oldValue) => {
     if (newValue && !oldValue) {
-      console.log("Now true")
-      //console.log(nameinput)
       focusInput()
     }
   }

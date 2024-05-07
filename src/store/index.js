@@ -17,7 +17,7 @@ export const useStore = defineStore('exercise_data', {
   },
   actions: {
     newStats(stats) {
-      console.log('stat exists:',this.current_user in this.users_test_history)
+      //console.log('stat exists:',this.current_user in this.users_test_history)
       if (this.current_user in this.users_test_history) {
         this.users_test_history[this.current_user].push(stats)
       } else {
