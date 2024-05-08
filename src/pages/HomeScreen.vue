@@ -39,6 +39,11 @@ const startOperation = (operation) => {
 
 <template>
   <div >
+    <div v-if="current_user">
+      Selamat datang kembali 
+      <h2>{{ current_user }}</h2>
+    </div>
+    <p>&nbsp;</p>
     <h3>
       Pilih Operasi
     </h3>
