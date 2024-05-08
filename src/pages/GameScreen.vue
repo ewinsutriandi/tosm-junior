@@ -4,9 +4,11 @@ import { storeToRefs } from 'pinia'
 import Timer from '../components/Timer.vue'
 import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
+import HomeButton from '../components/HomeButton.vue'
 import { generateQuiz } from '../helpers/generators.js'
 import { useStore } from '../store/index'
 import { OperationDesc } from '../helpers/constants'
+
 
 const store = useStore()
 
@@ -192,7 +194,6 @@ function endGame(state) {
     <div v-if="gameState == GameState.LOSE_BY_MISTAKE 
           || gameState == GameState.LOSE_TIME_UP
           || gameState == GameState.WON">
-      <h2>Permainan Selesai</h2> 
       <div v-if="gameState == GameState.WON">
         <h1>Berhasil!</h1>
         <button @click="prepareNextLevel">Lanjut Level {{curLevel + 1}}</button>
@@ -210,6 +211,25 @@ function endGame(state) {
         <button @click="replayLevel">Coba lagi</button>
       </div>
     </div>
-    
+    <div v-if="gameState != GameState.IN_GAME">
+      <button class="home-button"
+        @click="this.$router.push('/')">
+        <HomeButton/>
+      </button>
+    </div>
   </div>
 </template>
+<style scoped>
+.home-button {
+  width : 50px;
+  height: 50px;
+  margin-top: 32px;
+  padding: 12px 12px;
+  
+}
+    
+.home-button-svg {
+  width: 50px;
+  height: 50px;
+}
+</style>
