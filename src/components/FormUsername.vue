@@ -26,7 +26,7 @@ const closeModal = () => {
         return
     }
     store.updateCurrentUser(nama.value)
-    console.log('Emit close modal, nama:',nama.value)
+    // console.log('Emit close modal, nama:',nama.value)
     emit('modal-close')
 }
 

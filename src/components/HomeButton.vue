@@ -1,8 +1,11 @@
 <script setup>
-
+import { useRouter } from 'vue-router';
+const router = useRouter()
+const  goHome = () => router.push({path: '/'})
 </script>
 <template>
-    <div >
+    <button class="home-button" @click="goHome">
+    <div class="home-button-svg">
         <svg class="center"
             role="img">
             <path opacity="0.4" 
@@ -20,11 +23,27 @@
             </path>
         </svg>
     </div>
+    </button>
 </template>
 <style scoped>
 .center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.home-button {
+  border: 0;
+  width : 50px;
+  height: 50px;
+  margin-top: 32px;
+  padding: 12px 12px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+}
+
+.home-button-svg {
+  width: 50px;
+  height: 50px;
 }
 </style>

@@ -23,9 +23,11 @@ export const useStore = defineStore('exercise_data', {
       } else {
         this.users_test_history[this.current_user] = [stats]
       }
+      //console.log("User exist:",!(this.current_user in this.users))
+      if (!(this.current_user in this.users)) this.users[this.current_user] = {}
     },
     updateCurrentUser(user) {
-        console.log('store',user)
+        //console.log('store',user)
         this.current_user = user
     },
     updateSettings(partialSettings) {

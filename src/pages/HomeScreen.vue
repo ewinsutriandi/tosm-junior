@@ -42,6 +42,9 @@ const startOperation = (operation) => {
     <div v-if="current_user">
       Selamat datang kembali 
       <h2>{{ current_user }}</h2>
+      <div class="info">
+        <router-link to="/switchusr">Bukan {{current_user}}?</router-link>
+      </div>
     </div>
     <p>&nbsp;</p>
     <h3>
@@ -69,12 +72,14 @@ const startOperation = (operation) => {
 </template>
 
 <style scoped>
+
 .opbutton {
   margin: 30px 8px 0;
   user-select: none;
 }
 .row {
   display: flex;
+  justify-content: center;
   width: 100%;
   margin: 0 auto 8px;
   touch-action: manipulation;
@@ -85,6 +90,7 @@ const startOperation = (operation) => {
 button {
   font-family: inherit;
   font-weight: bold;
+  font-size: larger;
   border: 0;
   padding: 0;
   margin: 0 6px 0 0;
@@ -95,7 +101,7 @@ button {
   user-select: none;
   background-color: #d3d6da;
   color: #1a1a1b;
-  flex: 1;
+  
   display: flex;
   justify-content: center;
   align-items: center;

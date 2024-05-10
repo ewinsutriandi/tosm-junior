@@ -1,6 +1,5 @@
 <script setup>
 import { ref,onUnmounted } from 'vue'
-import { storeToRefs } from 'pinia'
 import Timer from '../components/Timer.vue'
 import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
@@ -8,8 +7,9 @@ import HomeButton from '../components/HomeButton.vue'
 import { generateQuiz } from '../helpers/generators.js'
 import { useStore } from '../store/index'
 import { OperationDesc } from '../helpers/constants'
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter()
 const store = useStore()
 
 const GameState = Object.freeze({ 
@@ -31,6 +31,8 @@ const wrongAnsw = ref(0)
 
 let questions
 let timeLimit
+
+const  goHome = () => router.push({path: '/'})
 
 // Questions related
 function initLevel() {
@@ -150,6 +152,7 @@ function endGame(state) {
   gameState.value = state
 }
 
+
 </script>
 <template>
   <div>
@@ -161,9 +164,10 @@ function endGame(state) {
       <h4> PILIH LEVEL</h4>
       <p>&nbsp;</p>
       <p>
-        <button @click="prepareFirstGame(1)">LEVEL 1</button>
+        <button class="pick-level"
+          @click="prepareFirstGame(1)">LEVEL 1</button>
         &nbsp;
-        <button 
+        <button class="pick-level"
           @click="prepareFirstGame(store.maxOpsLevel)">
           LEVEL {{ store.maxOpsLevel }}
         </button>
@@ -212,24 +216,17 @@ function endGame(state) {
       </div>
     </div>
     <div v-if="gameState != GameState.IN_GAME">
-      <button class="home-button"
-        @click="this.$router.push('/')">
-        <HomeButton/>
-      </button>
+      <HomeButton/>
     </div>
   </div>
 </template>
 <style scoped>
-.home-button {
-  width : 50px;
-  height: 50px;
-  margin-top: 32px;
+.pick-level {
+  font-size: small;
+  border: 0;
   padding: 12px 12px;
-  
-}
-    
-.home-button-svg {
-  width: 50px;
-  height: 50px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
 }
 </style>
