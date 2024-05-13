@@ -5,6 +5,7 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import ClickOutside from './directives/ClickOutsideDirective';
 import './style.css';
+import './registerServiceWorker'
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)
