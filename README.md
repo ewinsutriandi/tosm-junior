@@ -1,7 +1,17 @@
-# Vue 3 + Vite
+# About ToSM Junior
+[ToSM Junior|https://tosmjunior.web.app] is a simple, web-based math game designed for children aged 6 and up who are just beginning to learn basic arithmetic operations, primarily involving single-digit numbers.  
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The game aims to help kids become comfortable with small numbers and memorize the results of operations involving them. This foundational knowledge will enable them to focus on more complex aspects of problem-solving as they progress to higher grades.
 
-## Recommended IDE Setup
+ToSM Junior adalah permainan matematika berbasis web yang sederhana, dirancang untuk anak-anak usia 6+ yang baru mulai belajar operasi aritmatika dasar, terutama yang melibatkan angka satu digit.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Permainan ini bertujuan untuk membantu anak-anak menjadi nyaman dengan angka kecil dan menghafal hasil operasi yang melibatkannya. Pengetahuan dasar ini akan memungkinkan mereka untuk fokus pada aspek-aspek pemecahan masalah yang lebih kompleks saat mereka naik ke tingkat yang lebih tinggi.
+
+## Notes
+On why this thing is important   
+> "..by the end of Grade 3, know from memory all products of two one-digit numbers." *Common Core standard CCSS.MATH.CONTENT.3.OA.C.7*
+> "The multiplication tables check (MTC) is statutory for all year 4 pupils registered at state-funded maintained schools, special schools or academies, including free schools, in England." Standard Tesing Agency - UK Govt  
+
+
+## Tech stacks
+PWA made using Vue3 and composition API. Data is currently saved locally to local storage using Pinia. 
