@@ -11,7 +11,7 @@ Permainan ini bertujuan untuk membantu anak-anak menjadi nyaman dengan angka kec
 On why this thing is important   
 > "..by the end of Grade 3, know from memory all products of two one-digit numbers." *Common Core standard CCSS.MATH.CONTENT.3.OA.C.7*  
 
-> "The multiplication tables check (MTC) is statutory for all year 4 pupils registered at state-funded maintained schools, special schools or academies, including free schools, in England." Standard Tesing Agency - UK Govt  
+> "The multiplication tables check (MTC) is statutory for all year 4 pupils registered at state-funded maintained schools, special schools or academies, including free schools, in England." *Standard Tesing Agency - UK Govt*  
 
 > [Do children today still learn multiplication tables by heart?](https://www.quora.com/Do-children-today-still-learn-multiplication-tables-by-heart?top_ans=45218082)
 
