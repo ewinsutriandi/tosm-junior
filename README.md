@@ -1,9 +1,9 @@
 # About ToSM Junior
-[ToSM Junior|https://tosmjunior.web.app] is a simple, web-based math game designed for children aged 6 and up who are just beginning to learn basic arithmetic operations, primarily involving single-digit numbers.  
+[ToSM Junior](https://tosmjunior.web.app) is a simple, web-based math game designed for children aged 6 and up who are just beginning to learn basic arithmetic operations, primarily involving single-digit numbers.  
 
 The game aims to help kids become comfortable with small numbers and memorize the results of operations involving them. This foundational knowledge will enable them to focus on more complex aspects of problem-solving as they progress to higher grades.
 
-ToSM Junior adalah permainan matematika berbasis web yang sederhana, dirancang untuk anak-anak usia 6+ yang baru mulai belajar operasi aritmatika dasar, terutama yang melibatkan angka satu digit.
+[ToSM Junior](https://tosmjunior.web.app) adalah permainan matematika berbasis web yang sederhana, dirancang untuk anak-anak usia 6+ yang baru mulai belajar operasi aritmatika dasar, terutama yang melibatkan angka satu digit.
 
 Permainan ini bertujuan untuk membantu anak-anak menjadi nyaman dengan angka kecil dan menghafal hasil operasi yang melibatkannya. Pengetahuan dasar ini akan memungkinkan mereka untuk fokus pada aspek-aspek pemecahan masalah yang lebih kompleks saat mereka naik ke tingkat yang lebih tinggi.
 
