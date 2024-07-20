@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useStore = defineStore("exercise_data", {
+export const useStore = defineStore("tosmjr_data", {
   state: () => ({
     users: {},
     current_user: "",
@@ -8,7 +8,7 @@ export const useStore = defineStore("exercise_data", {
     current_ops: null,
   }),
   getters: {
-    maxOpsLevel: (state) =>
+    maxOpsLevel: (state) => 
       state.users_test_history[state.current_user]
         ? state.users_test_history[state.current_user]
             .filter(
@@ -16,6 +16,13 @@ export const useStore = defineStore("exercise_data", {
             )
             .reduce((a, b) => (a < b.level ? b.level : a), 0) + 1
         : 1,
+    winsOnLevel: (state) => (level) =>
+      state.users_test_history[state.current_user]
+        ? state.users_test_history[state.current_user]
+            .filter(
+              (rec) => rec.operation == state.current_ops && rec.end_state == 2 && rec.level == level
+            )
+        : 0,
   },
   actions: {
     newStats(stats) {

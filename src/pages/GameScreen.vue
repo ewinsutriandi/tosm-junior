@@ -4,8 +4,7 @@ import Timer from '../components/Timer.vue'
 import SoalViewer from '../components/SoalViewer.vue'
 import Keyboard from '../components/Keyboard.vue'
 import HomeButton from '../components/HomeButton.vue'
-import StarIndicator from '../components/StarIndicator.vue'
-import { generateQuiz } from '../helpers/generators.js'
+import { generateQuiz,maxLevel } from '../helpers/generators.js'
 import { useStore } from '../store/index'
 import { OperationDesc } from '../helpers/constants'
 import { useRouter } from 'vue-router';
@@ -41,7 +40,7 @@ const goHome = () => router.push({ path: '/' })
 function initLevel() {
   //console.log("init level: "+curLevel.value)
   let levelQuizObj = generateQuiz(curLevel.value, store.current_ops)
-  console.log("level: ", levelQuizObj)
+  //console.log("level: ", levelQuizObj)
   questions = levelQuizObj.questions
   timeLimit = levelQuizObj.timeLimit
   starThreshold = levelQuizObj.starThres
@@ -132,7 +131,6 @@ function prepareFirstGame(level) {
 function startGame() {
   startTime.value = Date.now()
   gameState.value = GameState.IN_GAME
-
 }
 
 function prepareNextLevel() {
@@ -151,22 +149,31 @@ function endGame(state) {
   gameStat = {
     operation: store.current_ops,
     time_taken: Date.now(),
+    num_question: questions.length,
     duration: duration,
     level: curLevel.value,
-    end_state: state
+    end_state: state,
+    star_cnt: starForCurGame(duration)
   }
   store.newStats(gameStat)
   gameState.value = state
 }
 
-function starObtained() {
-  for (let i = starThreshold.length - 1; i >= 0; i--) {
-    if (gameStat.duration <= starThreshold[i]) {
-      return i + 1
-    }
-  }
-}
+const starForCurGame = (duration) => 
+  starThreshold.reduce((maxStars, threshold, index) =>  
+    duration <= threshold ? index + 1 : maxStars, 
+      0); 
 
+const findMaxStars = (level) => 
+      store.winsOnLevel(level)
+        .reduce((max, attempt) => Math.max(max, attempt.star_cnt), 0);
+
+const getTotalStars = (n) =>
+    [...Array(n).keys()]
+      .map(i => findMaxStars(n - i))
+      .reduce((accum,val) => accum + val,0)
+
+      
 </script>
 <template>
   <div>
@@ -174,20 +181,23 @@ function starObtained() {
     <!-- Pick level if maxlevel > 1-->
     <div v-if="gameState == GameState.PICK_LEVEL">
       <h3> Operasi {{ OperationDesc(store.current_ops) }}</h3>
-      <p>&nbsp;</p>
+      <h5>{{  getTotalStars(store.maxOpsLevel - 1) }} ✭ </h5>
       <h4> PILIH LEVEL</h4>
-      <p>&nbsp;</p>
-      <p>
-      <div v-for="index in store.maxOpsLevel">
+      <div v-for="index in (Math.min(store.maxOpsLevel,maxLevel))">
         <button class="pick-level" @click="prepareFirstGame(index)">
-          LEVEL {{ index }} <br>
-          <div class="rating-button">
-            <StarIndicator num="3" colored="2" />
-          </div>
+          LEVEL {{ index }} : &nbsp;
+          <span v-for="idx in findMaxStars(index)" :key="idx">
+              ✭
+              <span class="sr-only">star count...</span>
+            </span>
+            <span v-for="idx in (starThreshold.length - findMaxStars(index))" :key="idx">
+              ✩
+              <span class="sr-only">star count...</span>
+            </span>
+          
         </button>
       </div>
-      </p>
-      <div class="info">Total bintang pada operasi NAMA OPERASI : XXX / MAX</div>
+      
 
     </div>
     <!-- Before the game start -->
@@ -227,18 +237,26 @@ function starObtained() {
       || gameState == GameState.WON">
       <div v-if="gameState == GameState.WON">
         <h1>Berhasil!</h1>
-        <div>
-          <span v-for="idx in starObtained()" :key="idx">
+        <h3>
+          <span v-for="idx in gameStat.star_cnt" :key="idx">
             ✭
             <span class="sr-only">star count...</span>
-          </span>
-          
-        </div>
+          </span> 
+        </h3>
         <h4>
-          Kamu berhasil menyelesaikan level ini dalam {{ gameStat.duration }} detik
+          Level tuntas dalam {{ gameStat.duration }} detik
         </h4>
-        
-        <button class="next-level-button" @click="prepareNextLevel">Lanjut Level {{ curLevel + 1 }}</button>
+        <button v-if="curLevel<maxLevel" 
+          class="next-level-button" @click="prepareNextLevel">
+          Lanjut Level {{ curLevel + 1 }}
+        </button>
+        <div v-if="curLevel==maxLevel" >
+          <h4>Seluruh level sudah dituntaskan</h4>
+          <button class="next-level-button"
+            @click="gameState = GameState.PICK_LEVEL">
+            Kembali ke daftar level
+          </button>
+        </div>
       </div>
       <div v-if="gameState == GameState.LOSE_TIME_UP">
         <div>
@@ -264,6 +282,7 @@ function starObtained() {
 </template>
 <style scoped>
 .pick-level {
+  width: 155px;
   font-size: small;
   text-align: center;
   border: 0;

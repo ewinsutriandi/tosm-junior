@@ -57,6 +57,20 @@ h3 {
   margin: 6pt;
 }
 
+h4 {
+  font-size: 1.0em;
+  line-height: 0.6;
+  margin-top: 12pt;
+  margin-bottom: 12pt;
+}
+
+h5 {
+  font-size: 1.0em;
+  line-height: 0.6;
+  margin-top: 12pt;
+  margin-bottom: 18pt;
+}
+
 .info {
   font-size: smaller;
   font-style: italic; 

@@ -22,7 +22,7 @@ const starThresholds = [
     4,3,2.5,2
 ]
 
-const maxLevel = 7
+export const maxLevel = 7
 
 const createQuiz = (a,b) => ({b1: a, b2: b,})
 const createAddQuiz = (a,b) => 
