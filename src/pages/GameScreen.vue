@@ -12,6 +12,15 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const store = useStore()
 
+console.log('user',store.current_user)
+console.log('user2',store.current_user === undefined)
+console.log('user3',store.current_user == '')
+console.log('user4',store.current_user === '')
+
+if (store.current_user === '') {
+  router.push('/')
+} 
+
 const GameState = Object.freeze({
   PICK_LEVEL: -1,
   BEFORE_START: 0,
@@ -34,7 +43,6 @@ let timeLimit
 let starThreshold
 let gameStat
 
-const goHome = () => router.push({ path: '/' })
 
 // Questions related
 function initLevel() {
