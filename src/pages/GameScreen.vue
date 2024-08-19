@@ -12,12 +12,7 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 const store = useStore()
 
-console.log('user',store.current_user)
-console.log('user2',store.current_user === undefined)
-console.log('user3',store.current_user == '')
-console.log('user4',store.current_user === '')
-
-if (store.current_user === '') {
+if (store.current_user === '' || store.current_ops === '') {
   router.push('/')
 } 
 
