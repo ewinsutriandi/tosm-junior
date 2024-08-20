@@ -8,21 +8,28 @@ export const useStore = defineStore("tosmjr_data", {
     current_ops: null,
   }),
   getters: {
-    maxOpsLevel: (state) => 
+    maxOpsLevel: (state) => (ops) => 
       state.users_test_history[state.current_user]
         ? state.users_test_history[state.current_user]
             .filter(
-              (rec) => rec.operation == state.current_ops && rec.end_state == 2
+              (rec) => rec.operation == ops && rec.end_state == 2
             )
             .reduce((a, b) => (a < b.level ? b.level : a), 0) + 1
         : 1,
-    winsOnLevel: (state) => (level) =>
+    winsOnLevel: (state) => (level,ops) =>
       state.users_test_history[state.current_user]
         ? state.users_test_history[state.current_user]
             .filter(
-              (rec) => rec.operation == state.current_ops && rec.end_state == 2 && rec.level == level
+              (rec) => rec.operation == ops && rec.end_state == 2 && rec.level == level
             )
         : 0,
+    starsOnLevel: (state) => (level,ops) =>
+      state.winsOnLevel(level,ops)
+        .reduce((max, attempt) => Math.max(max, attempt.star_cnt), 0),
+    totalStarsOnOps: (state) => (ops) =>
+      [...Array(state.maxOpsLevel(ops)).keys()]
+        .map(i => state.starsOnLevel(state.maxOpsLevel(ops) - i,ops))
+        .reduce((accum,val) => accum + val,0)
   },
   actions: {
     newStats(stats) {

@@ -32,15 +32,16 @@ const curLevel = ref(1)
 const curIdx = ref(0)
 const corrCnt = ref(0)
 const wrongAnsw = ref(0)
+const curOps = store.current_ops
+const maxStar = 4
 
 let questions
 let timeLimit
 let starThreshold
 let gameStat
 
-
-// Questions related
-function initLevel() {
+// function to initialize level
+const initLevel = () => {
   //console.log("init level: "+curLevel.value)
   let levelQuizObj = generateQuiz(curLevel.value, store.current_ops)
   //console.log("level: ", levelQuizObj)
@@ -53,23 +54,22 @@ function initLevel() {
   wrongAnsw.value = {}
 }
 
-// Prompt to pick level if necessary
-if (store.maxOpsLevel > 1) {
+// Check if any level has been completed, prompt them to pick if true
+// Else initialize level 1 game
+if (store.maxOpsLevel(curOps) > 1) {
   gameState.value = GameState.PICK_LEVEL
+} else {
+  initLevel()
 }
 
-initLevel()
-
+// Listen to relevant keystroke from keyboard
 let allowInput = true
 const onKeyup = (e) => onKey(e.key)
-
 window.addEventListener('keyup', onKeyup)
-
 onUnmounted(() => {
   window.removeEventListener('keyup', onKeyup)
 })
-
-function onKey(key) {
+const onKey = (key) => {
   if (!allowInput) return
   //console.log('Key up: '+key)
   if (/^[0-9]$/.test(key) && gameState.value == GameState.IN_GAME) {
@@ -80,18 +80,17 @@ function onKey(key) {
   }
 }
 
-function onTimeUpdate(time) {
+// Timer related
+const onTimeUpdate = (time) => {
   //console.log('time',time)
 }
-
-function onTimeIsUp() {
+const onTimeIsUp = () => {
   console.log('Time is up!!')
   endGame(GameState.LOSE_TIME_UP)
 }
 
 // gameplay related
-
-function evaluateKeyPress() {
+const evaluateKeyPress = () => {
   let curQuiz = questions[curIdx.value]
   let corrAns = curQuiz.ans + ""
   if (ansTemp.value !== '') {
@@ -103,10 +102,8 @@ function evaluateKeyPress() {
     }
   }
 }
-
-let mistake = {}
-
-function answer() {
+let mistake = {} // mistake object container
+const answer = () => {
   let curQuiz = questions[curIdx.value]
   if (ansTemp.value === curQuiz.ans + "") {
     corrCnt.value++
@@ -125,29 +122,29 @@ function answer() {
   }
 }
 
-function prepareFirstGame(level) {
+const prepareGame = (level) => {
   curLevel.value = level
   initLevel()
   gameState.value = GameState.BEFORE_START
 }
 
-function startGame() {
+const startGame = () => {
   startTime.value = Date.now()
   gameState.value = GameState.IN_GAME
 }
 
-function prepareNextLevel() {
+const prepareNextLevel = () => {
   curLevel.value++
   initLevel()
   gameState.value = GameState.BEFORE_START
 }
 
-function replayLevel() {
+const replayLevel = () => {
   initLevel()
   gameState.value = GameState.BEFORE_START
 }
 
-function endGame(state) {
+const endGame = (state) => {
   let duration = Math.round((Date.now() - startTime.value) / 1000)
   gameStat = {
     operation: store.current_ops,
@@ -166,16 +163,6 @@ const starForCurGame = (duration) =>
   starThreshold.reduce((maxStars, threshold, index) =>  
     duration <= threshold ? index + 1 : maxStars, 
       0); 
-
-const findMaxStars = (level) => 
-      store.winsOnLevel(level)
-        .reduce((max, attempt) => Math.max(max, attempt.star_cnt), 0);
-
-const getTotalStars = (n) =>
-    [...Array(n).keys()]
-      .map(i => findMaxStars(n - i))
-      .reduce((accum,val) => accum + val,0)
-
       
 </script>
 <template>
@@ -183,25 +170,22 @@ const getTotalStars = (n) =>
     <!--{{ store.current_ops }} | {{ store.maxOpsLevel }}-->
     <!-- Pick level if maxlevel > 1-->
     <div v-if="gameState == GameState.PICK_LEVEL">
-      <h3> Operasi {{ OperationDesc(store.current_ops) }}</h3>
-      <h5>{{  getTotalStars(store.maxOpsLevel - 1) }} ✭ </h5>
+      <h3> Operasi {{ OperationDesc(curOps) }}</h3>
+      <h5> {{ store.totalStarsOnOps(curOps) }} ✭ </h5>
       <h4> PILIH LEVEL</h4>
-      <div v-for="index in (Math.min(store.maxOpsLevel,maxLevel))">
-        <button class="pick-level" @click="prepareFirstGame(index)">
+      <div v-for="index in (Math.min(store.maxOpsLevel(curOps),maxLevel))">
+        <button class="pick-level" @click="prepareGame(index)">
           LEVEL {{ index }} : &nbsp;
-          <span v-for="idx in findMaxStars(index)" :key="idx">
+          <span v-for="idx in store.starsOnLevel(index,curOps)" :key="idx">
               ✭
               <span class="sr-only">star count...</span>
             </span>
-            <span v-for="idx in (starThreshold.length - findMaxStars(index))" :key="idx">
+            <span v-for="idx in (maxStar - store.starsOnLevel(index,curOps))" :key="idx">
               ✩
-              <span class="sr-only">star count...</span>
-            </span>
-          
+              <span class="sr-only">star left count...</span>
+            </span>          
         </button>
-      </div>
-      
-
+      </div>      
     </div>
     <!-- Before the game start -->
     <div v-if="gameState == GameState.BEFORE_START">

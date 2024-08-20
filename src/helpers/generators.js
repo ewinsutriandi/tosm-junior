@@ -18,7 +18,7 @@ export function generateQuiz(level,operation) {
     return generateQuestions(generator,level)
 }
 
-const starThresholds = [
+export const starThresholds = [
     4,3,2.5,2
 ]
 
