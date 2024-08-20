@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { OperationsArr } from "../helpers/constants";
 
 export const useStore = defineStore("tosmjr_data", {
   state: () => ({
@@ -22,14 +23,17 @@ export const useStore = defineStore("tosmjr_data", {
             .filter(
               (rec) => rec.operation == ops && rec.end_state == 2 && rec.level == level
             )
-        : 0,
+        : [],
     starsOnLevel: (state) => (level,ops) =>
       state.winsOnLevel(level,ops)
         .reduce((max, attempt) => Math.max(max, attempt.star_cnt), 0),
     totalStarsOnOps: (state) => (ops) =>
       [...Array(state.maxOpsLevel(ops)).keys()]
         .map(i => state.starsOnLevel(state.maxOpsLevel(ops) - i,ops))
-        .reduce((accum,val) => accum + val,0)
+        .reduce((accum,val) => accum + val,0),
+    totalStarsAllOps: (state) => () =>
+      OperationsArr.map(ops => state.totalStarsOnOps(ops))
+        .reduce((accum,val) => accum + val, 0)
   },
   actions: {
     newStats(stats) {

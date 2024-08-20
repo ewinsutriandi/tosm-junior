@@ -20,3 +20,4 @@ export const OperationDesc = (o) => {
     }
     return operDesc
 }
+export const OperationsArr = [Operations.TAMBAH,Operations.KURANG,Operations.KALI,Operations.BAGI]

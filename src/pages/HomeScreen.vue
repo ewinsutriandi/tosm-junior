@@ -42,6 +42,7 @@ const startOperation = (operation) => {
     <div v-if="current_user">
       Selamat datang kembali 
       <h2>{{ current_user }}</h2>
+      <h5>{{ store.totalStarsAllOps() }} ✭ </h5>
       <div class="info">
         <router-link to="/switchusr">Bukan {{current_user}}?</router-link>
       </div>
